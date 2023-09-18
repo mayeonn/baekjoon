@@ -1,5 +1,5 @@
 import sys
-# numpy 사용하지 않기 (시간초과)
+# numpy 사용하지 않기 (runtime error!)
 
 def multiplyMatrix(m1, m2):
     length = len(m1)
@@ -11,18 +11,18 @@ def multiplyMatrix(m1, m2):
                 result[i][j] %= 1000    # 큰 수 연산 줄이기
     return result
 
-def recursivelyMultiplying(matrix, b):
-    if b==1:
-        return matrix
+def recursivelyMultiplying(m, n):
+    if n==1:
+        return m
     else:
-        # B가 짝수면  A^n 을 (A^2)^n/2 로 바꾸어  A를 곱하고, N을 2로 나눈다
-        if b%2==0:
-            matrix = recursivelyMultiplying(matrix, b//2)
-            return multiplyMatrix(matrix, matrix)
-        # B가 홀수면 A^n 을 A^(n-1) * A 로 바꾸고 result에 A를 곱한다.
+        # n이 짝수이면,  m^n 을 (m^2)^n/2 로 바꾸어 m을 제곱하고 n을 2로 나눔
+        if n%2==0:
+            m = recursivelyMultiplying(m, n//2)
+            return multiplyMatrix(m, m)
+        # n이 홀수이면,  m^n 을 m^(n-1) * A 로 바꾸어 m을 제곱
         else:
-            matrix = recursivelyMultiplying(matrix, b-1)
-            return multiplyMatrix(A, matrix)
+            m = recursivelyMultiplying(m, n-1)
+            return multiplyMatrix(A, m)
 
 
 N, B = map(int, sys.stdin.readline().split())
