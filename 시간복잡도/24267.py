@@ -2,10 +2,9 @@ import sys
 cnt = 0
 n = int(sys.stdin.readline())
 
-for i in range(1, n-1):
-    for j in range(i + 1, n):
-        for k in range(j+1, n+1):
-            cnt+=1
+# 중첩 반복문은 시간 복잡도를 증가시킨다. 반복문을 분석해 식 찾기.
+for i in range(1, n):
+    cnt += i*(i-1)//2
 
 print(cnt)
 print(3)
