@@ -1,23 +1,27 @@
-import sys
+from itertools import combinations
 
-str1 = list(sys.stdin.readline())
-str2 = list(sys.stdin.readline())
+str1 = list(input().rstrip())
+str2 = input().rstrip()
+result = ""
 
-dp = [[""]*len(str2)]*len(str1)
+for i in range(len(str1), 0, -1):
+    dp = list(combinations(str1, i))
+    for string in dp:
+        LCS = ""
+        temp = str2
+        for letter in string:
+            idx = temp.find(letter)
+            if idx == -1:
+                break
+            else:
+                temp = temp[idx+1:]
+                LCS += letter
+        if len(LCS)==len(string):
+            result = LCS
+            break
+    if len(result) != 0:
+        break
 
-for i in range(1, len(str1)):
-    for j in range(1, len(str2)):
-        # dp[i][j] : str1의 i번쨰까지, str2의 j번째까지 문자열의 LCS
-        if str1[i-1] == str2[j-1]:
-            dp[i][j] = dp[i-1][j-1] + str1[i-1]
-        
-        elif len(dp[i-1][j]) >= len(dp[i][j-1]):
-            dp[i][j] = dp[i-1][j]
-        else:
-            dp[i][j] = dp[i][j-1]
-    # print(dp[i])
-
-result = dp[-1][-1]
 print(len(result))
-if len(result)!=0:
+if len(result) != 0:
     print(result)
